@@ -29,10 +29,12 @@ function displayFiles(files, parentNode, folderId) {
     const folderContentElement = document.getElementById('folderContent');
     const folderTitleElement = document.getElementById('folderTitle');
     const fileViewerElement = document.getElementById('fileViewer');
+    const fileViewerElementV1 = document.getElementById('fileViewerV1');
+
 
     // Wyczyszczenie widoku pliku
     fileViewerElement.innerHTML = '';
-
+    fileViewerElementV1.innerHTML = '';
     if (!parentNode) {
         fileListElement.innerHTML = ''; // Wyczyszczenie listy przed aktualizacją
     }
@@ -72,7 +74,7 @@ function displayFiles(files, parentNode, folderId) {
                 // Dodaj obsługę kliknięcia na plik
                 fileLink.addEventListener('click', () => {
                     // Wyświetl zawartość pliku w prawym panelu
-                    displayFileContent(file, fileViewerElement);
+                    displayFileContent(file, fileViewerElement, fileViewerElementV1);
                 });
 
                 listItem.appendChild(fileLink);
@@ -104,26 +106,35 @@ function closePdfModal() {
 }
 
 
-function displayFileContent(file, fileViewerElement) {
+function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
+    const supportedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp'];
+    const fileExtension = getFileExtension(file.name);
+
     if (file.mimeType === 'application/pdf') {
         // Obsługa pliku PDF
-        // fileViewerElement.innerHTML = `<iframe src="https://drive.google.com/file/d/${file.id}/preview" width="100%" height="100%"></iframe>`;
-        // Obsługa pliku PDF
         const pdfModal = document.getElementById('pdfModal');
-        const pdfViewer = document.getElementById('fileViewer');
 
-        pdfViewer.innerHTML = `<iframe src="https://drive.google.com/file/d/${file.id}/preview" width="100%" height="100%"></iframe>`;
+        fileViewerElement.innerHTML = `<iframe src="https://drive.google.com/file/d/${file.id}/preview" width="100%" height="100%"></iframe>`;
         pdfModal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Ukryj scroll na body
-     
     } else if (file.mimeType.startsWith('audio/')) {
         // Obsługa pliku dźwiękowego (np. MP3)
-        fileViewerElement.innerHTML = `<audio controls><source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}"></audio>`;
+        fileViewerElementV1.innerHTML = `<audio controls><source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}"></audio>`;
+    } else if (supportedImageExtensions.includes(fileExtension.toLowerCase())) {
+        // Obsługa pliku graficznego (zdjęcia)
+        fileViewerElement.innerHTML = `<img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}" style="max-width: 100%; max-height: 100%;">`;
+        pdfModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Ukryj scroll na body
     } else {
         // Inne typy plików - do zaimplementowania dla konkretnych formatów
-        fileViewerElement.innerHTML = `<p>Podgląd pliku "${file.name}" nie jest obsługiwany.</p>`;
+        fileViewerElementV1.innerHTML = `<p>Podgląd pliku "${file.name}" nie jest obsługiwany.</p>`;
     }
 }
+
+function getFileExtension(fileName) {
+    return fileName.split('.').pop();
+}
+
 
 function goToParentFolder() {
     // // Znajdź ID folderu nadrzędnego (jeśli nie jest to główny folder)
