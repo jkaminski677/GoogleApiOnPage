@@ -11,8 +11,10 @@
         <div id="container">
 
             <div id="leftPanel">
-                <h2>Google Drive Explorer</h2>
-                <button onclick="listFiles()">Odśwież pliki</button>
+                <div class="headerPanel">
+                    <h2>Google Drive Explorer</h2>
+                    <button onclick="listFiles()">Odśwież pliki</button>
+                </div>
                 <div id="innerLeftPanel">
                     <ul id="fileList"></ul>
                 </div>
@@ -73,13 +75,16 @@
             }
 
             if (files && files.length > 0) {
+                // Sortowanie plików alfabetycznie
+                files.sort((a, b) => a.name.localeCompare(b.name));
+
                 files.forEach(file => {
                     if (file.mimeType === 'application/vnd.google-apps.folder') {
                         // Jeśli to folder, utwórz nowy element listy z klasą 'folder'
                         const folderItem = document.createElement('li');
                         folderItem.className = 'folder';
                         folderItem.textContent = `${file.name} `;
-                        
+
                         // Dodaj folder jako element nadrzędny dla kolejnych plików
                         if (parentNode) {
                             parentNode.appendChild(folderItem);
@@ -100,15 +105,15 @@
                         const listItem = document.createElement('li');
                         const fileLink = document.createElement('a');
                         fileLink.textContent = file.name;
-                        
+
                         // Dodaj obsługę kliknięcia na plik
                         fileLink.addEventListener('click', () => {
                             // Wyświetl zawartość pliku w prawym panelu
                             displayFileContent(file, fileViewerElement);
                         });
-                        
+
                         listItem.appendChild(fileLink);
-                        
+
                         // Dodaj do odpowiedniego foldera (jeśli jest)
                         if (parentNode) {
                             parentNode.appendChild(listItem);
@@ -120,15 +125,15 @@
             } else {
                 const emptyMessage = document.createElement('p');
                 emptyMessage.textContent = 'Brak plików w folderze.';
-                
+
                 if (parentNode) {
                     parentNode.appendChild(emptyMessage);
                 } else {
                     fileListElement.appendChild(emptyMessage);
                 }
             }
-
         }
+
 
         function displayFileContent(file, fileViewerElement) {
             if (file.mimeType === 'application/pdf') {

@@ -38,9 +38,19 @@ body {
     overflow: hidden; /* Dodane, aby uniknąć przekraczania zawartości */
 }
 
+.headerPanel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 #innerLeftPanel {
-    height: 50%;
+    height: 100%;
     overflow: auto;
+    /* border: 2px solid peru; */
+    background-color: #202020;
+    border-radius: 10px;
 }
 
 #rightPanel {
@@ -123,6 +133,10 @@ p {
     #leftPanel {
         height: 35%;
         transition: height 0.3s; /* Dodano transition dla płynnego efektu zmiany wysokości */
+    }
+
+    #leftPanel h2{
+        font-size: 18px;
     }
 
     #rightPanel {
