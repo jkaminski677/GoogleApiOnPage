@@ -1,0 +1,138 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #555555;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#innerBody {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+#container {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+}
+
+#leftPanel {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 5px;
+    background-color: #000000;
+    overflow: hidden; /* Dodane, aby uniknąć przekraczania zawartości */
+}
+
+#innerLeftPanel {
+    height: 50%;
+    overflow: auto;
+}
+
+#rightPanel {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    border-radius: 10px;
+    overflow: auto;
+    padding: 20px;
+    margin: 0 5px;
+    background-color: #000000;
+}
+
+.folder {
+    list-style-type: none;
+    padding-left: 1em;
+    border-left: 1px solid #ccc;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+    color: #fff;
+}
+
+#fileViewer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    /* border: 2px solid peru; */
+}
+
+.folder:hover {
+    background-color: #333;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+h1, h2 {
+    color: #4CAF50;
+}
+
+#fileViewer iframe,
+#fileViewer audio {
+    width: 100%;
+    /* max-width: 800px; */
+    margin-top: 10px;
+}
+
+p {
+    color: #aaa;
+}
+
+/* ... Inny kod CSS ... */
+
+@media only screen and (max-width: 600px) {
+    #container {
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    #leftPanel, #rightPanel {
+        width: 100%;
+        padding: 20px;
+        margin: 0 0 10px 0;
+        box-sizing: border-box;
+    }
+
+    #leftPanel {
+        height: 35%;
+        transition: height 0.3s; /* Dodano transition dla płynnego efektu zmiany wysokości */
+    }
+
+    #rightPanel {
+        height: 65%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .fullWidth {
+        height: 100% !important; /* Ustawienie wysokości na 100% z priorytetem */
+    }
+}
+

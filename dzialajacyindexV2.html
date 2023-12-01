@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        #leftPanel {
+            flex: 1;
+        }
+
+        #rightPanel {
+            flex: 2;
+        }
+
+        .folder {
+            list-style-type: none;
+            padding-left: 1em;
+            border-left: 1px solid #ccc;
+            margin-bottom: 0.5em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Drive Explorer</h1>
+    <div id="leftPanel">
+        <button onclick="listFiles()">Pokaż pliki w folderze</button>
+        <ul id="fileList"></ul>
+    </div>
+    <div id="rightPanel">
+        <h2 id="folderTitle"></h2>
+        <ul id="folderContent"></ul>
+    </div>
+
+    <script>
+        // Zmienne związane z Google Drive API
+        const CLIENT_ID = '651449741883-e2lqdofq9i78j4tciiqu2mm2q918ina3.apps.googleusercontent.com';
+        const API_KEY = 'AIzaSyB9fIJi2vQWEr-pHfTAdII_jpXDe5AjEnI';
+        const ROOT_FOLDER_ID = '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
+
+        function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null) {
+            // Żądanie do Google Drive API
+            fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayFiles(data.files, parentNode, folderId);
+                })
+                .catch(error => console.error('Błąd pobierania plików:', error));
+        }
+
+        function displayFiles(files, parentNode, folderId) {
+            const fileListElement = document.getElementById('fileList');
+            const folderContentElement = document.getElementById('folderContent');
+            const folderTitleElement = document.getElementById('folderTitle');
+
+            if (!parentNode) {
+                fileListElement.innerHTML = ''; // Wyczyszczenie listy przed aktualizacją
+            }
+
+            if (files && files.length > 0) {
+                files.forEach(file => {
+                    if (file.mimeType === 'application/vnd.google-apps.folder') {
+                        // Jeśli to folder, utwórz nowy element listy z klasą 'folder'
+                        const folderItem = document.createElement('li');
+                        folderItem.className = 'folder';
+                        folderItem.textContent = `${file.name} `;
+                        
+                        // Dodaj folder jako element nadrzędny dla kolejnych plików
+                        if (parentNode) {
+                            parentNode.appendChild(folderItem);
+                        } else {
+                            fileListElement.appendChild(folderItem);
+                        }
+
+                        // Dodaj obsługę kliknięcia na folder
+                        folderItem.addEventListener('click', () => {
+                            folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
+                            folderTitleElement.textContent = file.name; // Ustawienie tytułu folderu
+
+                            // Rekurencyjnie wywołaj listFiles dla tego foldera
+                            listFiles(file.id, folderContentElement);
+                        });
+                    } else {
+                        // Jeśli to plik, dodaj jako element listy
+                        const listItem = document.createElement('li');
+                        const fileLink = document.createElement('a');
+                        fileLink.textContent = file.name;
+                        fileLink.href = `https://drive.google.com/uc?id=${file.id}`;
+                        fileLink.target = '_blank'; // Otwórz link w nowym oknie/karcie
+                        
+                        listItem.appendChild(fileLink);
+                        
+                        // Dodaj do odpowiedniego foldera (jeśli jest)
+                        if (parentNode) {
+                            parentNode.appendChild(listItem);
+                        } else {
+                            fileListElement.appendChild(listItem);
+                        }
+                    }
+                });
+            } else {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.textContent = 'Brak plików w folderze.';
+                
+                if (parentNode) {
+                    parentNode.appendChild(emptyMessage);
+                } else {
+                    fileListElement.appendChild(emptyMessage);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
