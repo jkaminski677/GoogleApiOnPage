@@ -12,7 +12,7 @@
 
             <div id="leftPanel">
                 <h2>Google Drive Explorer</h2>
-                <button onclick="listFiles()">Pokaż pliki w folderze</button>
+                <button onclick="listFiles()">Odśwież pliki</button>
                 <div id="innerLeftPanel">
                     <ul id="fileList"></ul>
                 </div>
@@ -51,11 +51,13 @@
                 .then(data => {
                     displayFiles(data.files, parentNode, folderId);
                 })
-                .catch(error => console.error('Błąd pobierania plików:', error));
-
-
-            
+                .catch(error => console.error('Błąd pobierania plików:', error));            
         }
+
+        // Funkcja do wywołania listFiles po załadowaniu strony
+        document.addEventListener('DOMContentLoaded', function() {
+            listFiles();
+        });
 
         function displayFiles(files, parentNode, folderId) {
             const fileListElement = document.getElementById('fileList');
