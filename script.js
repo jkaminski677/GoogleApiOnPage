@@ -22,16 +22,7 @@ function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null, searchTerm = ''
         .then(response => response.json())
         .then(data => {
             const filteredFiles = data.files.filter(file => file.name.toLowerCase().includes(searchTerm));
-            displayFiles(filteredFiles, parentNode, folderId);
-
-            // Dodaj obsługę kliknięcia na elementy w folderContent
-            if (getComputedStyle(backButton).visibility === 'hidden') {
-                folderContentElement.addEventListener('click', (event) => {
-                    console.log('hello');
-                    backButton.style.visibility = "visible"
-                });
-            }
-            
+            displayFiles(filteredFiles, parentNode, folderId);           
         })
         .catch(error => console.error('Błąd pobierania plików:', error));
 }
@@ -55,6 +46,12 @@ function displayFiles(files, parentNode, folderId) {
     }
 
     if (files && files.length > 0) {
+        // Dodaj obsługę kliknięcia na elementy w folderContent
+        if (getComputedStyle(backButton).visibility === 'hidden') {
+            folderContentElement.addEventListener('click', (event) => {
+                backButton.style.visibility = "visible";
+            });
+        }
         // Sortowanie plików alfabetycznie
         files.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -119,7 +116,12 @@ function displayFiles(files, parentNode, folderId) {
 
 
         });
-    } else {
+    } 
+    else {
+        folderContentElement.addEventListener('click', (event) => {
+            backButton.style.visibility = "hidden";
+        });
+
         const emptyMessage = document.createElement('p');
         emptyMessage.textContent = 'Brak plików w folderze.';
 
