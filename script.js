@@ -75,7 +75,6 @@ function displayFiles(files, parentNode, folderId) {
                 // Dodaj obsługę kliknięcia na folder
                 folderItem.addEventListener('click', (event) => {
                     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
-                    folderTitleElement.textContent = file.name; // Ustawienie tytułu folderu
 
                     if (window.innerWidth < 600) {
                         leftPanel.style.height = '35%';
@@ -89,8 +88,8 @@ function displayFiles(files, parentNode, folderId) {
 
 
                     if (fileListElement.contains(event.target)) {
-                        // Zapisz coś do zmiennej (np. nazwę klikniętego pliku)
                         lastClickedFolderId = file.id;
+                        folderTitleElement.textContent = file.name; // Ustawienie tytułu folderu
                     }
 
                     // Rekurencyjnie wywołaj listFiles dla tego foldera
