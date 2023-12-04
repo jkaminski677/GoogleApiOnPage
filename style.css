@@ -1,3 +1,17 @@
+:root {
+    --background-body: #000000;
+    --background-panel-right: #343541;
+    --background-panel-left: #000000;
+    --background-list: #202123;
+    --background-folders: #202123;
+    --background-folders-hover: #3c3e42;
+    --button-background-color: #ff7e3e;
+    --button-background-hover-color: #70371a;
+    --button-color: #211e1d;
+    --body-color: #fff;
+    --search-bar-active: #cfcfcf;
+  }
+
 html {
     margin: 0;
     padding: 0;
@@ -6,8 +20,9 @@ html {
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background-color: #555555;
-    color: #fff;
+    /* background-color: #555555; */
+    color: var(--body-color);
+    background-color: var(--background-body);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +40,7 @@ body {
     display: flex;
     padding: 10px;
     width: 100%;
+    /* background-color: #22333B; */
 }
 
 #leftPanel {
@@ -34,7 +50,8 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin: 0 5px;
-    background-color: #000000;
+    /* background-color: #000000; */
+    background-color: var(--background-panel-left);
     overflow: hidden; /* Dodane, aby uniknąć przekraczania zawartości */
     transition: all 0.2s;
 }
@@ -42,15 +59,14 @@ body {
 .headerPanel{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
 #innerLeftPanel {
     height: 100%;
     overflow: auto;
-    /* border: 2px solid peru; */
-    background-color: #202020;
+    /* background-color: var(--background-list); */
     border-radius: 10px;
 }
 
@@ -62,7 +78,8 @@ body {
     overflow: auto;
     padding: 20px;
     margin: 0 5px;
-    background-color: #000000;
+    /* background-color: #000000; */
+    background-color: var(--background-panel-right);
     transition: all 0.2s;
 }
 
@@ -82,19 +99,20 @@ body {
 
 .folder,
 li {
-    background-color: #333;
+    background-color: var(--background-list);
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
-    color: #fff;
     transition: all 0.2s;
 }
 
 .folder:hover,
 li:hover {
-    background-color: #555;
+    background-color: var(--background-folders-hover);
     margin: 7px;
+    transition: all 0.2s;
+
 }
 
 
@@ -105,6 +123,8 @@ li:hover {
     height: 100%;
     width: 100%;
     border-radius: 10px;
+    transition: all 0.2s;
+
 }
 
 
@@ -121,25 +141,29 @@ li:hover {
 
 button {
     padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    /* background-color: #4CAF50; */
+    background-color: var(--button-background-color);
+    color: var(--button-color);
+    font-weight: 600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.1s;
+
 }
 
 button:hover {
-    background-color: #45a049;
+    /* background-color: #45a049; */
+    background-color: var(--button-background-hover-color);
+    color:#ffffff
 }
 
 #backButton{
     visibility: hidden;
 }
 
-
-
 h1, h2 {
-    color: #4CAF50;
+    border-radius: 5px;
 }
 
 #fileViewer iframe,
@@ -179,8 +203,12 @@ p {
     padding: 20px;
     width: 80%;
     max-width: 600px;
-    background-color: #fff;
+    background-color: var(--body-color);
     border-radius: 10px;
+}
+
+#labelInmodal{
+    color: var(--background-body);
 }
 
 .close {
@@ -212,24 +240,26 @@ p {
 
 /* Search bar */
 #searchInput {
+    background-color: var(--background-panel-right);
+    color: var(--body-color);
     padding: 10px;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 5px;
     margin-bottom: 15px;
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
+    transition: all 0.2s;
+    border: 2px solid var(--background-folders-hover);
 }
 
 #searchInput:focus {
+    background-color: var(--search-bar-active);
+    color: var(--background-folders);
+    padding: 14px;
     outline: none;
-    border-color: #4CAF50; /* Kolor obramowania po uzyskaniu focusu */
 }
 /* END Search bar */
-
-
-
-
 
 
 
@@ -243,9 +273,20 @@ p {
 /* ... Inny kod CSS ... */
 
 @media only screen and (max-width: 600px) {
+    #searchInput{
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    #searchInput:focus {
+        padding: 12px;
+    }
     #container {
         flex-direction: column;
         height: 100vh;
+        padding: 0 10px;
     }
 
     #leftPanel, #rightPanel {

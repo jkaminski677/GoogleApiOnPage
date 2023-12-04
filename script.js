@@ -10,7 +10,9 @@ let currentFolderId = ROOT_FOLDER_ID;
 
 const folderContentElement = document.getElementById('folderContent');
 const fileViewerElementV1 = document.getElementById('fileViewerV1');
-const backButton = document.getElementById('backButton');
+const backButton = document.getElementById('backButton'); 
+const folderTitleElement = document.getElementById('folderTitle');
+
 
 // Dodaj nowe zmienne do śledzenia ostatnio naciśniętego folderu
 let lastClickedFolderId = null;
@@ -35,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayFiles(files, parentNode, folderId) {
     const fileListElement = document.getElementById('fileList');
-    const folderTitleElement = document.getElementById('folderTitle');
     const fileViewerElement = document.getElementById('fileViewer');
 
     // Wyczyszczenie widoku pliku
@@ -74,9 +75,10 @@ function displayFiles(files, parentNode, folderId) {
                     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
 
                     if (window.innerWidth < 600) {
-                        leftPanel.style.height = '35%';
-                        rightPanel.style.height = '65%';
+                        leftPanel.style.height = '0%';
+                        rightPanel.style.height = '100%';
                         rightPanel.style.visibility = "visible";
+                        leftPanel.style.visibility = "hidden";
 
                     } else {
                         leftPanel.style.width = '25%';
@@ -224,18 +226,20 @@ function restoreDefaultFolder() {
 
 
 
-function goToParentFolder() {
+function closeRightPanel() {
     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
     fileViewerElementV1.innerHTML = ''; // Wyczyszczenie prawego panelu
     if (window.innerWidth < 600) {
         leftPanel.style.height = '95%';
         rightPanel.style.height = '0%';
         rightPanel.style.visibility = "hidden";
+        leftPanel.style.visibility = "visible";
     }
     else {
         leftPanel.style.width = '75%';
         rightPanel.style.width = '25%';
     }
+    backButton.style.visibility = "hidden";
 }
 
 // Dodaj funkcję otwierającą ostatnio naciśnięty folder

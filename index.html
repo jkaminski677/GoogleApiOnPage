@@ -24,7 +24,7 @@
             </div>
             <div id="rightPanel">
                 <div class="headerPanel">
-                    <button onclick="goToParentFolder()">Zamknij</button>
+                    <button onclick="closeRightPanel()">Zamknij</button>
                     <button id="backButton" onclick="openLastClickedFolder()">Wstecz</button>
                     <!-- Dodaj przycisk do zmiany folderu w sekcji body -->
                     <button onclick="openChangeFolderModal()">Zmień folder</button>
@@ -33,14 +33,14 @@
                     <div id="changeFolderModal" class="modal">
                     <div class="modal-content">
                         <span class="close" onclick="closeChangeFolderModal()">&times;</span>
-                        <label for="folderLink">Wprowadź link do folderu Google Drive:</label>
+                        <label id="labelInmodal" for="folderLink">Wprowadź link do folderu Google Drive:</label>
                         <input type="text" id="folderLink" placeholder="Wklej link...">
                         <button onclick="changeFolder()">Zmień folder</button>
                         <button onclick="restoreDefaultFolder()">Pierwotny folder</button>
                     </div>
                     </div>
                 </div>
-                <h2 id="folderTitle"></h2>
+                <h2 id="folderTitle">Tytuł piosenki</h2>
                 <ul id="folderContent"></ul>
                 <div id="fileViewerV1"></div>
                 <div id="pdfModal" class="modal">
