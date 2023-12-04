@@ -5,18 +5,16 @@ const ROOT_FOLDER_ID = '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
 
 let currentFolderId = ROOT_FOLDER_ID;
 
-function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null) {
-
-    // Zapisz bieżący folder
+// Zaktualizuj funkcję listFiles
+function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null, searchTerm = '') {
     currentFolderId = folderId;
-
-    // Żądanie do Google Drive API
     fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
-            displayFiles(data.files, parentNode, folderId);
+            const filteredFiles = data.files.filter(file => file.name.toLowerCase().includes(searchTerm));
+            displayFiles(filteredFiles, parentNode, folderId);
         })
-        .catch(error => console.error('Błąd pobierania plików:', error));            
+        .catch(error => console.error('Błąd pobierania plików:', error));
 }
 
 // Funkcja do wywołania listFiles po załadowaniu strony
@@ -133,6 +131,11 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
 
 function getFileExtension(fileName) {
     return fileName.split('.').pop();
+}
+
+function searchFolders() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    listFiles(ROOT_FOLDER_ID, null, searchInput);
 }
 
 

@@ -175,6 +175,23 @@ p {
     background-color: #555555;
 }
 
+/* Search bar */
+#searchInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #4CAF50; /* Kolor obramowania po uzyskaniu focusu */
+}
+/* END Search bar */
+
 
 
 

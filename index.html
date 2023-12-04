@@ -15,6 +15,8 @@
                     <h2>Google Drive Explorer</h2>
                     <button onclick="listFiles()">Odśwież pliki</button>
                 </div>
+                <!-- Dodaj pole do wprowadzania tekstu w sekcji body -->
+                <input type="text" id="searchInput" oninput="searchFolders()" placeholder="Szukaj folderów...">
                 <div id="innerLeftPanel">
                     <ul id="fileList"></ul>
                 </div>
