@@ -1,9 +1,14 @@
 // Zmienne związane z Google Drive API
 const CLIENT_ID = '651449741883-e2lqdofq9i78j4tciiqu2mm2q918ina3.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyB9fIJi2vQWEr-pHfTAdII_jpXDe5AjEnI';
-const ROOT_FOLDER_ID = '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
+// let ROOT_FOLDER_ID = '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
+
+// Pobierz ID folderu z Local Storage lub ustaw domyślne
+let ROOT_FOLDER_ID = localStorage.getItem('ROOT_FOLDER_ID') || '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
 
 let currentFolderId = ROOT_FOLDER_ID;
+
+const folderContentElement = document.getElementById('folderContent');
 
 // Zaktualizuj funkcję listFiles
 function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null, searchTerm = '') {
@@ -24,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayFiles(files, parentNode, folderId) {
     const fileListElement = document.getElementById('fileList');
-    const folderContentElement = document.getElementById('folderContent');
     const folderTitleElement = document.getElementById('folderTitle');
     const fileViewerElement = document.getElementById('fileViewer');
     const fileViewerElementV1 = document.getElementById('fileViewerV1');
@@ -59,6 +63,17 @@ function displayFiles(files, parentNode, folderId) {
                 folderItem.addEventListener('click', () => {
                     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
                     folderTitleElement.textContent = file.name; // Ustawienie tytułu folderu
+
+                    if (window.innerWidth < 600) {
+                        leftPanel.style.height = '35%';
+                        rightPanel.style.height = '65%';
+                        rightPanel.style.visibility = "visible";
+
+                    } else {
+                        leftPanel.style.width = '25%';
+                        rightPanel.style.width = '75%';
+                    }
+                
 
                     // Rekurencyjnie wywołaj listFiles dla tego foldera
                     listFiles(file.id, folderContentElement);
@@ -139,18 +154,64 @@ function searchFolders() {
 }
 
 
+
+
+// Wywołaj funkcję listFiles z zapisanym ID folderu
+listFiles(ROOT_FOLDER_ID);
+
+function openChangeFolderModal() {
+    const changeFolderModal = document.getElementById('changeFolderModal');
+    changeFolderModal.style.display = 'block';
+}
+
+function closeChangeFolderModal() {
+    const changeFolderModal = document.getElementById('changeFolderModal');
+    changeFolderModal.style.display = 'none';
+}
+
+function changeFolder() {
+    const folderLinkInput = document.getElementById('folderLink');
+    const folderLink = folderLinkInput.value.trim();
+
+    // Sprawdź czy link zawiera ID folderu
+    const folderIdMatch = folderLink.match(/drive\/folders\/([^?]+)/);
+    
+    if (folderIdMatch) {
+        // Ustaw nowe ID folderu
+        ROOT_FOLDER_ID = folderIdMatch[1];
+        listFiles(ROOT_FOLDER_ID);
+
+        // Zapisz nowe ID folderu w Local Storage
+        localStorage.setItem('ROOT_FOLDER_ID', ROOT_FOLDER_ID);
+
+        closeChangeFolderModal();
+    } else {
+        alert('Nieprawidłowy link do folderu. Wprowadź poprawny link Google Drive.');
+    }
+}
+
+
+// Funkcja przywracająca pierwotny folder
+function restoreDefaultFolder() {
+    ROOT_FOLDER_ID = '179ezGslqWjoSMJ4rFK45A5jDZu8TbS_r';
+    listFiles(ROOT_FOLDER_ID);
+
+    // Zapisz pierwotny folder w Local Storage
+    localStorage.setItem('ROOT_FOLDER_ID', ROOT_FOLDER_ID);
+}
+
+
+
+
 function goToParentFolder() {
-    // // Znajdź ID folderu nadrzędnego (jeśli nie jest to główny folder)
-    // if (currentFolderId !== ROOT_FOLDER_ID) {
-    //     fetch(`https://www.googleapis.com/drive/v3/files/${currentFolderId}?key=${API_KEY}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.parents && data.parents.length > 0) {
-    //                 const parentId = data.parents[0];
-    //                 listFiles(parentId);
-    //             }
-    //         })
-    //         .catch(error => console.error('Błąd pobierania folderu nadrzędnego:', error));
-    // }
-    // Dodano sprawdzenie, czy panel na górze jest na całą szerokość
+    folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
+    if (window.innerWidth < 600) {
+        leftPanel.style.height = '95%';
+        rightPanel.style.height = '0%';
+        rightPanel.style.visibility = "hidden";
+    }
+    else {
+        leftPanel.style.width = '75%';
+        rightPanel.style.width = '25%';
+    }
 }

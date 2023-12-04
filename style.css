@@ -30,12 +30,13 @@ body {
 #leftPanel {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 75%;
     border-radius: 10px;
     padding: 20px;
     margin: 0 5px;
     background-color: #000000;
     overflow: hidden; /* Dodane, aby uniknąć przekraczania zawartości */
+    transition: all 0.2s;
 }
 
 .headerPanel{
@@ -56,12 +57,13 @@ body {
 #rightPanel {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 25%;
     border-radius: 10px;
     overflow: auto;
     padding: 20px;
     margin: 0 5px;
     background-color: #000000;
+    transition: all 0.2s;
 }
 
 /* .folder {
@@ -247,7 +249,7 @@ p {
     }
 
     #leftPanel {
-        height: 35%;
+        height: 95%;
         transition: height 0.3s; /* Dodano transition dla płynnego efektu zmiany wysokości */
     }
 
@@ -256,7 +258,8 @@ p {
     }
 
     #rightPanel {
-        height: 65%;
+        height: 0%;
+        visibility: hidden;
         overflow: hidden;
         border-radius: 10px;
     }

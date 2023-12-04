@@ -23,11 +23,25 @@
                 
             </div>
             <div id="rightPanel">
-                <div>
-                    <button onclick="goToParentFolder()">Powrót do folderu nadrzędnego</button>
-                    <h2 id="folderTitle"></h2>
-                    <ul id="folderContent"></ul>
+                <div class="headerPanel">
+                    <button onclick="goToParentFolder()">Wstecz</button>
+                    <!-- Dodaj przycisk do zmiany folderu w sekcji body -->
+                    <button onclick="openChangeFolderModal()">Zmień folder</button>
+                    
+                    <!-- Dodaj modal dla zmiany folderu -->
+                    <div id="changeFolderModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeChangeFolderModal()">&times;</span>
+                        <label for="folderLink">Wprowadź link do folderu Google Drive:</label>
+                        <input type="text" id="folderLink" placeholder="Wklej link...">
+                        <button onclick="changeFolder()">Zmień folder</button>
+                        <button onclick="restoreDefaultFolder()">Pierwotny folder</button>
+
+                    </div>
+                    </div>
                 </div>
+                <h2 id="folderTitle"></h2>
+                <ul id="folderContent"></ul>
                 <div id="fileViewerV1"></div>
                 <div id="pdfModal" class="modal">
                     <span class="close" onclick="closePdfModal()">
