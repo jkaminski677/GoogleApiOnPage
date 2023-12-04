@@ -97,6 +97,7 @@ li:hover {
     margin: 7px;
 }
 
+
 #fileViewer {
     display: flex;
     justify-content: center;
@@ -130,6 +131,12 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+#backButton{
+    visibility: hidden;
+}
+
+
 
 h1, h2 {
     color: #4CAF50;

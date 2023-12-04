@@ -24,7 +24,8 @@
             </div>
             <div id="rightPanel">
                 <div class="headerPanel">
-                    <button onclick="goToParentFolder()">Wstecz</button>
+                    <button onclick="goToParentFolder()">Zamknij</button>
+                    <button id="backButton" onclick="openLastClickedFolder()">Wstecz</button>
                     <!-- Dodaj przycisk do zmiany folderu w sekcji body -->
                     <button onclick="openChangeFolderModal()">Zmień folder</button>
                     
@@ -36,7 +37,6 @@
                         <input type="text" id="folderLink" placeholder="Wklej link...">
                         <button onclick="changeFolder()">Zmień folder</button>
                         <button onclick="restoreDefaultFolder()">Pierwotny folder</button>
-
                     </div>
                     </div>
                 </div>

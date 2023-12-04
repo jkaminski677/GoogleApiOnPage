@@ -9,6 +9,11 @@ let ROOT_FOLDER_ID = localStorage.getItem('ROOT_FOLDER_ID') || '179ezGslqWjoSMJ4
 let currentFolderId = ROOT_FOLDER_ID;
 
 const folderContentElement = document.getElementById('folderContent');
+const fileViewerElementV1 = document.getElementById('fileViewerV1');
+const backButton = document.getElementById('backButton');
+
+// Dodaj nowe zmienne do śledzenia ostatnio naciśniętego folderu
+let lastClickedFolderId = null;
 
 // Zaktualizuj funkcję listFiles
 function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null, searchTerm = '') {
@@ -18,6 +23,15 @@ function listFiles(folderId = ROOT_FOLDER_ID, parentNode = null, searchTerm = ''
         .then(data => {
             const filteredFiles = data.files.filter(file => file.name.toLowerCase().includes(searchTerm));
             displayFiles(filteredFiles, parentNode, folderId);
+
+            // Dodaj obsługę kliknięcia na elementy w folderContent
+            if (getComputedStyle(backButton).visibility === 'hidden') {
+                folderContentElement.addEventListener('click', (event) => {
+                    console.log('hello');
+                    backButton.style.visibility = "visible"
+                });
+            }
+            
         })
         .catch(error => console.error('Błąd pobierania plików:', error));
 }
@@ -27,12 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
     listFiles();
 });
 
+
 function displayFiles(files, parentNode, folderId) {
     const fileListElement = document.getElementById('fileList');
     const folderTitleElement = document.getElementById('folderTitle');
     const fileViewerElement = document.getElementById('fileViewer');
-    const fileViewerElementV1 = document.getElementById('fileViewerV1');
-
 
     // Wyczyszczenie widoku pliku
     fileViewerElement.innerHTML = '';
@@ -60,7 +73,7 @@ function displayFiles(files, parentNode, folderId) {
                 }
 
                 // Dodaj obsługę kliknięcia na folder
-                folderItem.addEventListener('click', () => {
+                folderItem.addEventListener('click', (event) => {
                     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
                     folderTitleElement.textContent = file.name; // Ustawienie tytułu folderu
 
@@ -73,7 +86,12 @@ function displayFiles(files, parentNode, folderId) {
                         leftPanel.style.width = '25%';
                         rightPanel.style.width = '75%';
                     }
-                
+
+
+                    if (fileListElement.contains(event.target)) {
+                        // Zapisz coś do zmiennej (np. nazwę klikniętego pliku)
+                        lastClickedFolderId = file.id;
+                    }
 
                     // Rekurencyjnie wywołaj listFiles dla tego foldera
                     listFiles(file.id, folderContentElement);
@@ -85,7 +103,7 @@ function displayFiles(files, parentNode, folderId) {
                 fileLink.textContent = file.name;
 
                 // Dodaj obsługę kliknięcia na plik
-                fileLink.addEventListener('click', () => {
+                listItem.addEventListener('click', () => {
                     // Wyświetl zawartość pliku w prawym panelu
                     displayFileContent(file, fileViewerElement, fileViewerElementV1);
                 });
@@ -99,6 +117,8 @@ function displayFiles(files, parentNode, folderId) {
                     fileListElement.appendChild(listItem);
                 }
             }
+
+
         });
     } else {
         const emptyMessage = document.createElement('p');
@@ -205,6 +225,7 @@ function restoreDefaultFolder() {
 
 function goToParentFolder() {
     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
+    fileViewerElementV1.innerHTML = ''; // Wyczyszczenie prawego panelu
     if (window.innerWidth < 600) {
         leftPanel.style.height = '95%';
         rightPanel.style.height = '0%';
@@ -214,4 +235,19 @@ function goToParentFolder() {
         leftPanel.style.width = '75%';
         rightPanel.style.width = '25%';
     }
+}
+
+// Dodaj funkcję otwierającą ostatnio naciśnięty folder
+function openLastClickedFolder() {
+    if (lastClickedFolderId) {
+        fileViewerElementV1.innerHTML = ''; 
+        folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
+        // folderTitleElement.textContent = 'Ostatni folder'; // Ustawienie tytułu folderu
+
+        // Rekurencyjnie wywołaj listFiles dla ostatnio naciśniętego folderu
+        listFiles(lastClickedFolderId, folderContentElement);
+    } else {
+        alert('Brak ostatnio naciśniętego folderu.');
+    }
+    backButton.style.visibility = "hidden";
 }
