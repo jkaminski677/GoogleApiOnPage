@@ -64,13 +64,35 @@ body {
     background-color: #000000;
 }
 
-.folder {
+/* .folder {
     list-style-type: none;
     padding-left: 1em;
     border-left: 1px solid #ccc;
     margin-bottom: 0.5em;
     cursor: pointer;
     color: #fff;
+}
+
+
+.folder:hover {
+    background-color: #333;
+} */
+
+.folder,
+li {
+    background-color: #333;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.2s;
+}
+
+.folder:hover,
+li:hover {
+    background-color: #555;
+    margin: 7px;
 }
 
 #fileViewer {
@@ -93,9 +115,6 @@ body {
     /* border: 2px solid peru; */
 }
 
-.folder:hover {
-    background-color: #333;
-}
 
 button {
     padding: 10px;
@@ -120,6 +139,13 @@ h1, h2 {
     /* max-width: 800px; */
     margin-top: 10px;
 }
+
+#fileList,
+#folderContent {
+    list-style: none;
+    padding: 5px;
+}
+
 
 p {
     color: #aaa;
@@ -154,7 +180,7 @@ p {
     left: 10px;
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: #aaa;
     cursor: pointer;
     background-color: #000000;
     width: 70px;
