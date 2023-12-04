@@ -138,6 +138,9 @@ li:hover {
     /* border: 2px solid peru; */
 }
 
+audio {
+    min-width: 90%;
+}
 
 button {
     padding: 10px;
@@ -149,7 +152,6 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.1s;
-
 }
 
 button:hover {
