@@ -115,6 +115,18 @@ li:hover {
 
 }
 
+a {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+img {
+    padding: 0px 5px;
+}
+
 
 #fileViewer {
     display: flex;

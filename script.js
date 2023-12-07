@@ -98,7 +98,34 @@ function displayFiles(files, parentNode, folderId) {
                 // Jeśli to plik, dodaj jako element listy
                 const listItem = document.createElement('li');
                 const fileLink = document.createElement('a');
+                const fileIcon = document.createElement('img'); // Dodajemy element obrazka
+
+                // Pobierz rozszerzenie pliku
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+
+                // Ustaw obrazek w zależności od rozszerzenia
+                if (fileExtension === 'pdf') {
+                    fileIcon.src = 'img/pdf.png'; // Zmienić ścieżkę do ikonki PDF
+                } else if (['png', 'jpg', 'jpeg', 'gif'].includes(fileExtension)) {
+                    fileIcon.src = 'img/icons8-image-file-512.png'; // Zmienić ścieżkę do ikonki obrazu
+                } else if (['mp3', 'wav', 'ogg'].includes(fileExtension)) {
+                    fileIcon.src = 'img/music-player.png'; // Zmienić ścieżkę do ikonki pliku audio
+                } 
+                // else {
+                //     console.warn('Nieobsługiwany format pliku:', file.name);
+                //     fileIcon.src = 'sciezka/do/ikonki/unknown.png'; // Zmienić ścieżkę do ikonki nieznanego formatu
+                // }
+
+                // Ustaw pozostałe właściwości obrazka (alternatywny tekst, szerokość, wysokość, itp.)
+                fileIcon.alt = 'Plik ikona';
+                fileIcon.width = 20; // Dostosuj szerokość ikonki do własnych preferencji
+                fileIcon.height = 20; // Dostosuj wysokość ikonki do własnych preferencji
+
+                // Ustaw tekst linku
                 fileLink.textContent = file.name;
+
+                // Dodaj obrazek jako dziecko linku
+                fileLink.appendChild(fileIcon);
 
                 // Dodaj obsługę kliknięcia na plik
                 listItem.addEventListener('click', () => {
