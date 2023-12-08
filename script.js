@@ -118,8 +118,8 @@ function displayFiles(files, parentNode, folderId) {
 
                 // Ustaw pozostałe właściwości obrazka (alternatywny tekst, szerokość, wysokość, itp.)
                 fileIcon.alt = 'Plik ikona';
-                fileIcon.width = 50; // Dostosuj szerokość ikonki do własnych preferencji
-                fileIcon.height = 50; // Dostosuj wysokość ikonki do własnych preferencji
+                fileIcon.width = 60; // Dostosuj szerokość ikonki do własnych preferencji
+                fileIcon.height = 60; // Dostosuj wysokość ikonki do własnych preferencji
 
                 // Ustaw tekst linku
                 fileLink.textContent = file.name;
