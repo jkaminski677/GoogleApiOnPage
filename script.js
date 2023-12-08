@@ -108,7 +108,7 @@ function displayFiles(files, parentNode, folderId) {
                     fileIcon.src = 'img/pdf.png'; // Zmienić ścieżkę do ikonki PDF
                 } else if (['png', 'jpg', 'jpeg', 'gif'].includes(fileExtension)) {
                     fileIcon.src = 'img/icons8-image-file-512.png'; // Zmienić ścieżkę do ikonki obrazu
-                } else if (['mp3', 'wav', 'ogg'].includes(fileExtension)) {
+                } else if (['mp3', 'wav', 'ogg', 'flac', 'aac', 'wma', 'm4a', 'ra', 'ac3', 'amr'].includes(fileExtension)) {
                     fileIcon.src = 'img/music-player.png'; // Zmienić ścieżkę do ikonki pliku audio
                 } 
                 // else {
