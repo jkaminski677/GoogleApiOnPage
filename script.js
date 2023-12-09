@@ -215,7 +215,7 @@ function updateLoopButtonStyle() {
     const loopButton = document.getElementById('loopButton');
     if (loopButton) {
         loopButton.textContent = isLooping ? 'Wyłącz pętle' : 'Włącz pętle';
-        loopButton.style.backgroundColor = isLooping ? '#FF6347' : '#4CAF50';
+        loopButton.style.backgroundColor = isLooping ? '#4CAF50' : '#ff7e3e';
         loopButton.style.color = isLooping ? '#fff' : '#000';
     }
 }
