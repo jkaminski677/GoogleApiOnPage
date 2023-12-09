@@ -219,6 +219,7 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
     }
 }
 
+
 let isLooping = false;
 
 function toggleLoop() {
