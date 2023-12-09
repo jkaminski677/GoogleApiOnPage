@@ -178,15 +178,17 @@ img {
     min-width: 90%;
 }
 
+#playPauseButton{
+    margin-top: 10px;
+    width: 100px;
+}
+
 #loopButton{
     margin-top: 10px;
     width: 280px;
 }
 
-#playPauseButton{
-    margin-top: 10px;
-    width: 100px;
-}
+
 
 button {
     padding: 10px;
@@ -374,11 +376,14 @@ p {
     }
     
     #fileViewerV1 {
-        border: 2px solid peru;
+        /* border: 2px solid peru; */
         flex-direction: column;
     }
+    #playPauseButton{
+        width: 90px;
+    }
     #loopButton{
-        width: 100%;
+        width: 120px;
     }
 }
 
