@@ -170,9 +170,22 @@ img {
 
 }
 
+#controlButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 90%;
+}
+
 #loopButton{
     margin-top: 10px;
     width: 280px;
+}
+
+#playPauseButton{
+    margin-top: 10px;
+    width: 100px;
 }
 
 button {

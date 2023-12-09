@@ -186,10 +186,13 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
         // Obsługa pliku dźwiękowego (np. MP3)
         fileTitleElement.textContent = file.name;
         fileViewerElementV1.innerHTML = `
-            <audio controls ${isLooping ? 'loop' : ''}>
+            <audio id="audioPlayer" controls ${isLooping ? 'loop' : ''}>
                 <source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}">
             </audio>
-            <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
+            <div id="controlButtons">
+                <button id="playPauseButton" onclick="togglePlayPause()">Start</button>
+                <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
+            </div>
         `;
         updateLoopButtonStyle(); // Dodane, aby zainicjować styl przycisku
     } else if (supportedImageExtensions.includes(fileExtension.toLowerCase())) {
@@ -207,21 +210,42 @@ let isLooping = false;
 
 function toggleLoop() {
     isLooping = !isLooping;
-    const audioElement = document.querySelector('audio');
+    const audioElement = document.getElementById('audioPlayer');
     if (audioElement) {
         audioElement.loop = isLooping;
         updateLoopButtonStyle();
     }
 }
 
+function togglePlayPause() {
+    const audioElement = document.getElementById('audioPlayer');
+    const playPauseButton = document.getElementById('playPauseButton');
+
+    if (audioElement) {
+        if (audioElement.paused) {
+            audioElement.play();
+            playPauseButton.textContent = 'Stop';
+            playPauseButton.style.backgroundColor = '#4CAF50';
+            playPauseButton.style.color = '#fff';
+        } else {
+            audioElement.pause();
+            playPauseButton.textContent = 'Start';
+            playPauseButton.style.backgroundColor = '#ff7e3e';
+            playPauseButton.style.color = '#000';
+        }
+    }
+}
+
 function updateLoopButtonStyle() {
     const loopButton = document.getElementById('loopButton');
     if (loopButton) {
-        loopButton.textContent = isLooping ? 'Wyłącz pętle' : 'Włącz pętle';
+        loopButton.textContent = isLooping ? 'Wyłącz pętlę' : 'Włącz pętlę';
         loopButton.style.backgroundColor = isLooping ? '#4CAF50' : '#ff7e3e';
         loopButton.style.color = isLooping ? '#fff' : '#000';
     }
 }
+
+
 
 function getFileExtension(fileName) {
     return fileName.split('.').pop();
