@@ -138,22 +138,35 @@ img {
     width: 100%;
     border-radius: 10px;
     transition: all 0.2s;
-
 }
 
 
 #fileViewerV1 {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     height: 100%;
     width: 100%;
     border-radius: 10px;
     /* border: 2px solid peru; */
 }
 
-audio {
+#fileViewer iframe{
+    width: 100%;
+    /* max-width: 800px; */
+    margin-top: 10px;
+}
+
+#fileViewerV1 audio {
     min-width: 90%;
+    /* max-width: 800px; */
+    margin-top: 10px;
+}
+
+#loopButton{
+    margin-top: 10px;
+    width: 280px;
 }
 
 button {
@@ -182,12 +195,7 @@ h1, h2 {
     border-radius: 5px;
 }
 
-#fileViewer iframe,
-#fileViewer audio {
-    width: 100%;
-    /* max-width: 800px; */
-    margin-top: 10px;
-}
+
 
 #fileList,
 #folderContent {
@@ -344,6 +352,14 @@ p {
         padding: 0px 10px;
         width: 30px;
         height: 30px;
+    }
+    
+    #fileViewerV1 {
+        border: 2px solid peru;
+        flex-direction: column;
+    }
+    #loopButton{
+        width: 100%;
     }
 }
 
