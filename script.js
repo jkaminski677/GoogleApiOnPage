@@ -399,9 +399,9 @@ function closeRightPanel() {
 // Dodaj funkcję otwierającą ostatnio naciśnięty folder
 function openLastClickedFolder() {
     if (lastClickedFolderId) {
-        fileViewerElementV1.innerHTML = ''; 
+        // fileViewerElementV1.innerHTML = ''; 
         folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
-        fileTitleElement.textContent = ''; // Wyczyszczenie tytułu piosenki
+        // fileTitleElement.textContent = ''; // Wyczyszczenie tytułu piosenki
         // folderTitleElement.textContent = 'Ostatni folder'; // Ustawienie tytułu folderu
 
         // Rekurencyjnie wywołaj listFiles dla ostatnio naciśniętego folderu
