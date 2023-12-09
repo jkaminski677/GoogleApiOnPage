@@ -182,7 +182,11 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
         document.body.style.overflow = 'hidden'; // Ukryj scroll na body
     } else if (file.mimeType.startsWith('audio/')) {
         // Obsługa pliku dźwiękowego (np. MP3)
-        fileViewerElementV1.innerHTML = `<audio controls><source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}"></audio>`;
+        fileViewerElementV1.innerHTML = `<audio controls ${file.isLoop ? 'loop' : ''} data-file-id="${file.id}"><source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}"></audio>`;
+        
+        // Dodaj przycisk do zmiany opcji pętli
+        fileViewerElementV1.innerHTML += `<button onclick="toggleLoop('${file.id}')" ${file.isLoop ? 'class="loop-enabled"' : ''}>${file.isLoop ? 'Wyłącz pętlę' : 'Włącz pętlę'}</button>`;
+    
     } else if (supportedImageExtensions.includes(fileExtension.toLowerCase())) {
         // Obsługa pliku graficznego (zdjęcia)
         fileViewerElement.innerHTML = `<img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}" style="max-width: 100%; max-height: 100%;">`;
@@ -191,6 +195,18 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
     } else {
         // Inne typy plików - do zaimplementowania dla konkretnych formatów
         fileViewerElementV1.innerHTML = `<p>Podgląd pliku "${file.name}" nie jest obsługiwany.</p>`;
+    }
+}
+
+// Funkcja do przełączania opcji pętli
+function toggleLoop(fileId) {
+    const audioElement = document.querySelector(`audio[data-file-id="${fileId}"]`);
+    const loopButton = document.querySelector(`button[data-file-id="${fileId}"]`);
+
+    if (audioElement && loopButton) {
+        audioElement.loop = !audioElement.loop;
+        loopButton.classList.toggle('loop-enabled', audioElement.loop);
+        loopButton.textContent = audioElement.loop ? 'Wyłącz pętlę' : 'Włącz pętlę';
     }
 }
 
