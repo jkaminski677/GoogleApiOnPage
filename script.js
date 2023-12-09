@@ -43,7 +43,7 @@ function displayFiles(files, parentNode, folderId) {
 
     // Wyczyszczenie widoku pliku
     fileViewerElement.innerHTML = '';
-    fileViewerElementV1.innerHTML = '';
+    // fileViewerElementV1.innerHTML = '';
     if (!parentNode) {
         fileListElement.innerHTML = ''; // Wyczyszczenie listy przed aktualizacją
     }
