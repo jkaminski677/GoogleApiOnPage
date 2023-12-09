@@ -162,7 +162,7 @@ a img {
     min-width: 90%;
     /* max-width: 800px; */
     margin: 10px 0;
-    /* display: none; */
+    display: none;
 }
 
 #fileTitle{
