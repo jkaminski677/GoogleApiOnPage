@@ -193,9 +193,9 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
             </audio>
             <div id="audioVisualizer">
                 <div id="controlButtons">
-                    <a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
+                <!--<a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
                             <button id="downloadButton">Pobierz</button>
-                    </a>
+                    </a>-->
                     <div id="timeDisplay">0:00 / 0:00</div>
                 </div>
                 <div id="progressContainer">
