@@ -192,16 +192,21 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
                 <source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}">
             </audio>
             <div id="audioVisualizer">
+                <div id="controlButtons">
+                    <a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
+                            <button id="downloadButton">Pobierz</button>
+                    </a>
+                    <div id="timeDisplay">0:00 / 0:00</div>
+                </div>
                 <div id="progressContainer">
                     <progress id="progressBar" value="0" max="100"></progress>
                     <input type="range" id="seekSlider" value="0" max="100" step="0.1" onchange="seekAudio()">
                 </div>
                 <div id="controlButtons">
                     <button id="playPauseButton" onclick="togglePlayPause()">Start</button>
-                    <div id="timeDisplay">0:00 / 0:00</div>
-                    <a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
-                        <button id="downloadButton">Pobierz</button>
-                    </a>
+                    <!--<a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
+                         <button id="downloadButton">Pobierz</button>
+                    </a> -->
                     <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
                 </div>
             </div>

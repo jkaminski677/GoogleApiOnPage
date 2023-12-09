@@ -402,10 +402,10 @@ p {
         flex-direction: column;
     }
     #playPauseButton{
-        width: 90px;
+        max-width: 90px;
     }
     #loopButton{
-        width: 120px;
+        max-width: 120px;
     }
 }
 
