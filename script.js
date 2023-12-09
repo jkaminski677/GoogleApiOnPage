@@ -171,6 +171,7 @@ function closePdfModal() {
 }
 
 
+
 function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
     const supportedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp'];
     const fileExtension = getFileExtension(file.name);
@@ -186,15 +187,27 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
         // Obsługa pliku dźwiękowego (np. MP3)
         fileTitleElement.textContent = file.name;
         fileViewerElementV1.innerHTML = `
+            
             <audio id="audioPlayer" controls ${isLooping ? 'loop' : ''}>
                 <source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}">
             </audio>
-            <div id="controlButtons">
-                <button id="playPauseButton" onclick="togglePlayPause()">Start</button>
-                <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
+            <div id="audioVisualizer">
+                <div id="progressContainer">
+                    <progress id="progressBar" value="0" max="100"></progress>
+                    <input type="range" id="seekSlider" value="0" max="100" step="0.1" onchange="seekAudio()">
+                </div>
+                <div id="controlButtons">
+                    <button id="playPauseButton" onclick="togglePlayPause()">Start</button>
+                    <div id="timeDisplay">0:00 / 0:00</div>
+                    <a href="https://drive.google.com/uc?id=${file.id}" download="${file.name}">
+                        <button id="downloadButton">Pobierz</button>
+                    </a>
+                    <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
+                </div>
             </div>
         `;
         updateLoopButtonStyle(); // Dodane, aby zainicjować styl przycisku
+        initProgressBar(); // Dodane, aby zainicjować pasek postępu
     } else if (supportedImageExtensions.includes(fileExtension.toLowerCase())) {
         // Obsługa pliku graficznego (zdjęcia)
         fileViewerElement.innerHTML = `<img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}" style="max-width: 100%; max-height: 100%;">`;
@@ -244,6 +257,59 @@ function updateLoopButtonStyle() {
         loopButton.style.color = isLooping ? '#fff' : '#000';
     }
 }
+
+function initProgressBar() {
+    const audioElement = document.getElementById('audioPlayer');
+    const progressBar = document.getElementById('progressBar');
+    const seekSlider = document.getElementById('seekSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+
+    if (audioElement && progressBar && seekSlider && timeDisplay) {
+        audioElement.addEventListener('timeupdate', () => {
+            const value = (audioElement.currentTime / audioElement.duration) * 100;
+            progressBar.value = value;
+            seekSlider.value = value;
+            updateTimeDisplay();
+        });
+
+        seekSlider.addEventListener('input', () => {
+            const seekTime = (audioElement.duration * seekSlider.value) / 100;
+            audioElement.currentTime = seekTime;
+            progressBar.value = seekSlider.value;
+            updateTimeDisplay();
+        });
+    }
+}
+
+function updateTimeDisplay() {
+    const audioElement = document.getElementById('audioPlayer');
+    const timeDisplay = document.getElementById('timeDisplay');
+
+    if (audioElement && timeDisplay) {
+        const currentTime = formatTime(audioElement.currentTime);
+        const duration = formatTime(audioElement.duration);
+        timeDisplay.textContent = `${currentTime} / ${duration}`;
+    }
+}
+
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    const formattedTime = `${minutes}:${(seconds < 10) ? '0' : ''}${seconds}`;
+    return formattedTime;
+}
+
+function seekAudio() {
+    const audioElement = document.getElementById('audioPlayer');
+    const seekSlider = document.getElementById('seekSlider');
+
+    if (audioElement && seekSlider) {
+        const seekTime = (audioElement.duration * seekSlider.value) / 100;
+        audioElement.currentTime = seekTime;
+    }
+}
+
+
 
 
 
