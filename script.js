@@ -182,11 +182,13 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
         document.body.style.overflow = 'hidden'; // Ukryj scroll na body
     } else if (file.mimeType.startsWith('audio/')) {
         // Obsługa pliku dźwiękowego (np. MP3)
-        fileViewerElementV1.innerHTML = `<audio controls ${file.isLoop ? 'loop' : ''} data-file-id="${file.id}"><source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}"></audio>`;
-        
-        // Dodaj przycisk do zmiany opcji pętli
-        fileViewerElementV1.innerHTML += `<button onclick="toggleLoop('${file.id}')" ${file.isLoop ? 'class="loop-enabled"' : ''}>${file.isLoop ? 'Wyłącz pętlę' : 'Włącz pętlę'}</button>`;
-    
+        fileViewerElementV1.innerHTML = `
+            <audio controls ${isLooping ? 'loop' : ''}>
+                <source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}">
+            </audio>
+            <button id="loopButton" onclick="toggleLoop()">Toggle Loop</button>
+        `;
+        updateLoopButtonStyle(); // Dodane, aby zainicjować styl przycisku
     } else if (supportedImageExtensions.includes(fileExtension.toLowerCase())) {
         // Obsługa pliku graficznego (zdjęcia)
         fileViewerElement.innerHTML = `<img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}" style="max-width: 100%; max-height: 100%;">`;
@@ -198,15 +200,23 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
     }
 }
 
-// Funkcja do przełączania opcji pętli
-function toggleLoop(fileId) {
-    const audioElement = document.querySelector(`audio[data-file-id="${fileId}"]`);
-    const loopButton = document.querySelector(`button[data-file-id="${fileId}"]`);
+let isLooping = false;
 
-    if (audioElement && loopButton) {
-        audioElement.loop = !audioElement.loop;
-        loopButton.classList.toggle('loop-enabled', audioElement.loop);
-        loopButton.textContent = audioElement.loop ? 'Wyłącz pętlę' : 'Włącz pętlę';
+function toggleLoop() {
+    isLooping = !isLooping;
+    const audioElement = document.querySelector('audio');
+    if (audioElement) {
+        audioElement.loop = isLooping;
+        updateLoopButtonStyle();
+    }
+}
+
+function updateLoopButtonStyle() {
+    const loopButton = document.getElementById('loopButton');
+    if (loopButton) {
+        loopButton.textContent = isLooping ? 'Wyłącz pętle' : 'Włącz pętle';
+        loopButton.style.backgroundColor = isLooping ? '#FF6347' : '#4CAF50';
+        loopButton.style.color = isLooping ? '#fff' : '#000';
     }
 }
 
