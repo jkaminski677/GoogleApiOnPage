@@ -164,6 +164,12 @@ img {
     margin-top: 10px;
 }
 
+#fileTitle{
+    width: 100%;
+    /* border: 2px solid peru; */
+
+}
+
 #loopButton{
     margin-top: 10px;
     width: 280px;

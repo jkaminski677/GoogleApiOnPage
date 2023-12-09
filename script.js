@@ -12,6 +12,8 @@ const folderContentElement = document.getElementById('folderContent');
 const fileViewerElementV1 = document.getElementById('fileViewerV1');
 const backButton = document.getElementById('backButton'); 
 const folderTitleElement = document.getElementById('folderTitle');
+const fileTitleElement = document.getElementById('fileTitle');
+
 
 
 // Dodaj nowe zmienne do śledzenia ostatnio naciśniętego folderu
@@ -176,12 +178,13 @@ function displayFileContent(file, fileViewerElement, fileViewerElementV1) {
     if (file.mimeType === 'application/pdf') {
         // Obsługa pliku PDF
         const pdfModal = document.getElementById('pdfModal');
-
+        
         fileViewerElement.innerHTML = `<iframe src="https://drive.google.com/file/d/${file.id}/preview" width="100%" height="100%"></iframe>`;
         pdfModal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Ukryj scroll na body
     } else if (file.mimeType.startsWith('audio/')) {
         // Obsługa pliku dźwiękowego (np. MP3)
+        fileTitleElement.textContent = file.name;
         fileViewerElementV1.innerHTML = `
             <audio controls ${isLooping ? 'loop' : ''}>
                 <source src="https://drive.google.com/uc?id=${file.id}" type="${file.mimeType}">
@@ -282,6 +285,8 @@ function restoreDefaultFolder() {
 function closeRightPanel() {
     folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
     fileViewerElementV1.innerHTML = ''; // Wyczyszczenie prawego panelu
+    fileTitleElement.textContent = ''; // Wyczyszczenie tytułu piosenki
+
     if (window.innerWidth < 600) {
         leftPanel.style.height = '95%';
         rightPanel.style.height = '0%';
@@ -300,6 +305,7 @@ function openLastClickedFolder() {
     if (lastClickedFolderId) {
         fileViewerElementV1.innerHTML = ''; 
         folderContentElement.innerHTML = ''; // Wyczyszczenie prawego panelu
+        fileTitleElement.textContent = ''; // Wyczyszczenie tytułu piosenki
         // folderTitleElement.textContent = 'Ostatni folder'; // Ustawienie tytułu folderu
 
         // Rekurencyjnie wywołaj listFiles dla ostatnio naciśniętego folderu
