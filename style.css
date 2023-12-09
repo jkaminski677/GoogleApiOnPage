@@ -161,8 +161,8 @@ a img {
 #fileViewerV1 audio {
     min-width: 90%;
     /* max-width: 800px; */
-    margin-top: 10px;
-    display: none;
+    margin: 10px 0;
+    /* display: none; */
 }
 
 #fileTitle{
