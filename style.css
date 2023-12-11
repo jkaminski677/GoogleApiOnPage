@@ -248,6 +248,7 @@ h1, h2 {
 #folderContent {
     list-style: none;
     padding: 5px;
+    /* border: 2px solid peru; */
 }
 
 #folderContent{
@@ -412,6 +413,10 @@ p {
     }
     #loopButton{
         max-width: 120px;
+    }
+    
+    #folderContent {
+        padding: 0px;
     }
 }
 
